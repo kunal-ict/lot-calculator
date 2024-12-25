@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Analysis Tools</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <style>
+    body {
+      background-color: #f4f4f9;
+      padding: 20px;
+      margin: auto;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    button {
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+
+    /* button {
+      background-color: #010101;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #000000;
+    } */
+
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #dff0d8;
+      border: 1px solid #d6e9c6;
+      color: #3c763d;
+      font-weight: bold;
+    }
+
+    .info {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #e9ecef;
+      border: 1px solid #ced4da;
+      color: #495057;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #4b4a4a;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #000000;
+      color: white;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- navbar  -->
+  <nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Analysis Tools</a>
+      <button class="navbar-toggler btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+        aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+        aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Tools</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+            aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Lot Calculator</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="https://www.babypips.com/tools/forex-market-hours">Market Hours</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Position Analysis (Long Term)
+              </a>
+              <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a class="dropdown-item" href="interest-rates.html">Interest Rates</a></li>
+                <li><a class="dropdown-item" href="#">Seasonal Tendencies</a></li>
+                <li><a class="dropdown-item" href="intermarket_analysis.html">Intermarket Analysis</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Monthly Notes</a></li>
+              </ul>
+            </li>
+            <hr>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Crypto Tools</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- lot calculator  -->
+  <br><br><br><br>
+  <h1 class="text-center">Lot Calculator</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-2 mb-3 mb-sm-0">
+      <form id="lotCalculator">
+        <label for="accountBalance">Account Balance ($):</label>
+        <input type="number" id="accountBalance" required>
+
+        <label for="riskPercentage">Risk Percentage (%):</label>
+        <input type="number" id="riskPercentage" required>
+
+        <label for="stopLossPips">Stop Loss (pips):</label>
+        <input type="number" id="stopLossPips" required>
+
+        <label for="pipValue">Pip Value:</label>
+        <input type="number" id="pipValue" required>
+
+        <button class="btn btn-outline-dark" type="button" onclick="calculateLotSize()">Calculate Lot Size</button>
+      </form>
+
+      <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <div class="info col-md-3 mx-5">
+      <h2>Pip Value for Popular Currency Pairs</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Currency Pair</th>
+            <th>Pip Value ($) per<br>Standard Lot</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>EUR/USD</td>
+            <td>$10</td>
+          </tr>
+          <tr>
+            <td>GBP/USD</td>
+            <td>$10</td>
+          </tr>
+          <tr>
+            <td>USD/JPY</td>
+            <td>$6</td>
+          </tr>
+          <tr>
+            <td>AUD/USD</td>
+            <td>$10</td>
+          </tr>
+          <tr>
+            <td>USD/CHF</td>
+            <td>$10</td>
+          </tr>
+          <tr>
+            <td>EUR/JPY</td>
+            <td>$6</td>
+          </tr>
+          <tr>
+            <td>GBP/JPY</td>
+            <td>$6</td>
+          </tr>
+          <tr>
+            <td>NZD/USD</td>
+            <td>$10</td>
+          </tr>
+          <tr>
+            <td>USD/CAD</td>
+            <td>$6.5</td>
+          </tr>
+          <tr>
+            <td>XAU/USD</td>
+            <td>$100</td>
+          </tr>
+          <tr>
+            <td>XAG/USD</td>
+            <td>$50</td>
+          </tr>
+          <tr>
+            <td>USOIL</td>
+            <td>$10</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3 ">
+      <div class="info">
+        <h2>How to Calculate Pip Value</h2>
+        <p>Pip value represents the monetary value of a single pip movement in your chosen currency pair. To
+          calculate
+          the
+          pip value:</p>
+        <ol>
+          <li>Determine the pip size (usually 0.0001 for most currency pairs, except for JPY pairs where it is
+            0.01).
+          </li>
+          <li>Use the formula: <strong>Pip Value = (Pip Size × Lot Size × Exchange Rate for quote currency to
+              account
+              currency)</strong></li>
+          <li>For example, if you are trading 1 lot (100,000 units) of EUR/USD and your account is in USD:
+            <br><strong>Pip Value = 0.0001 × 100,000 = $10</strong>
+          </li>
+          <li>If your account currency differs, adjust for the exchange rate between the quote currency and your
+            account
+            currency.</li>
+        </ol>
+        <p>Use this pip value when calculating your lot size.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- logic  -->
+    <script>
+      // Focus move when Enter key is pressed
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach((input, index) => {
+        input.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            if (index < inputs.length - 1) {
+              inputs[index + 1].focus();
+            } else {
+              calculateLotSize();
+            }
+          }
+        });
+      });
+
+      // Function to calculate lot size
+      function calculateLotSize() {
+        const accountBalance = parseFloat(document.getElementById('accountBalance').value);
+        const riskPercentage = parseFloat(document.getElementById('riskPercentage').value);
+        const stopLossPips = parseFloat(document.getElementById('stopLossPips').value);
+        const pipValue = parseFloat(document.getElementById('pipValue').value);
+
+        if (isNaN(accountBalance) || isNaN(riskPercentage) || isNaN(stopLossPips) || isNaN(pipValue)) {
+          alert('Please fill in all fields correctly.');
+          return;
+        }
+
+        const riskAmount = (accountBalance * riskPercentage) / 100;
+        const lotSize = riskAmount / (stopLossPips * pipValue);
+
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        resultDiv.textContent = `Recommended Lot Size: ${lotSize.toFixed(2)} lots`;
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"></script>
+</body>
+
+</html>
